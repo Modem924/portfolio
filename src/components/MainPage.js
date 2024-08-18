@@ -1,41 +1,76 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 const MainPage = () => {
-    const OnClickMenu = (e: React.SyntheticEvent<HTMLAnchorElement>) => {
-        e.preventDefault();
-        let menuData = (e.target , HTMLAnchorElement).hash;
-        const IdMatchedPage = document.querySelector(menuData);
-        IdMatchedPage?.scrollIntoView({ behavior: "smooth" });
-    };
-    
-    const menuData = ["소개", "기술", "프로젝트"];
-    
+    useEffect(() => {
+        const handleScroll = (event) => {
+            event.preventDefault();
+            const deltaY = event.deltaY;
+            const sections = document.querySelectorAll(".section");
+            const currentSectionIndex = [...sections].findIndex(
+                (section) => section.getBoundingClientRect().top >= 0
+            );
+
+            if (deltaY > 0 && currentSectionIndex < sections.length - 1) {
+                sections[currentSectionIndex + 1].scrollIntoView({ behavior: "smooth" });
+            } else if (deltaY < 0 && currentSectionIndex > 0) {
+                sections[currentSectionIndex - 1].scrollIntoView({ behavior: "smooth" });
+            }
+        };
+
+        window.addEventListener("wheel", handleScroll, { passive: false });
+
+        return () => {
+            window.removeEventListener("wheel", handleScroll);
+        };
+    }, []);
+
     return (
-        <>
-            <nav>
-                {menuData.map((data, idx) => (
-                    <a href={`#${data}`} onClick={OnClickMenu} key={idx} style={{ marginRight: "10px", cursor: "pointer" }}>
-                        {data}
-                    </a>
-                ))}
-            </nav>
-            
-            {/* Sections to Scroll To */}
-            <section id="소개" style={{ height: "100vh", padding: "20px", border: "1px solid black" }}>
-                <h2>소개 Section</h2>
-                <p>This is the 소개 section.</p>
-            </section>
-            
-            <section id="기술" style={{ height: "100vh", padding: "20px", border: "1px solid black" }}>
-                <h2>기술 Section</h2>
-                <p>This is the 기술 section.</p>
-            </section>
-            
-            <section id="프로젝트" style={{ height: "100vh", padding: "20px", border: "1px solid black" }}>
-                <h2>프로젝트 Section</h2>
-                <p>This is the 프로젝트 section.</p>
-            </section>
-        </>
+        <div className="main_container">
+            <div className="section Intro" id="Intro">
+                <h1 className = "Intro_header">송동하의 포트폴리오</h1>
+                <p></p>
+            </div>
+            <div className="section Skills" id="Skills">
+                <h3>Skills</h3>
+            </div>
+            <div className="section Projects" id="Projects">
+                <h3>Projects</h3>
+            </div>
+            <style jsx>{`
+                .main_container {
+                    height: 100vh;
+                    overflow-y: auto;
+                    scroll-snap-type: y mandatory;
+                }
+
+                .section {
+                    height: 100vh;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    scroll-snap-align: start;
+                    font-size: 2rem;
+                    background-color: white;
+                    border-bottom: 1px solid #ddd;
+                }
+
+                .Intro {
+                    background-color: #f8b400;
+                }
+
+                .Intro_header{
+
+                }
+
+                .Skills {
+                    background-color: #28a745;
+                }
+
+                .Projects {
+                    background-color: #17a2b8;
+                }
+            `}</style>
+        </div>
     );
 };
 
