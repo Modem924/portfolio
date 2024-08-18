@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import profileImage from "../util/profile.jpg";
+import MainPage from './MainPage';
 
 const Navigationbar = () => {
     useEffect(() => {
@@ -36,34 +37,41 @@ const Navigationbar = () => {
     };
 
     return (
-        <div className="container">
-            <nav className="nav">
-                <img src={profileImage} alt="Profile" className="profile-img" />
-                {menuData.map((data, idx) => (
-                    <button
-                        key={idx}
-                        className="nav-link"
-                        onClick={() => handleNavClick(data)}
-                    >
-                        {data}
-                    </button>
-                ))}
-                <div className="info-box">
-                    <p className="contact-title">Contact Me</p>
-                    <div className="info-text">
-                        <p>송동하 (Dongha Song)</p>
-                        <p>010-5745-7173</p>
-                        <p>gch04912@gmail.com</p>
+        <div className="layout">
+            <div className="container">
+                <nav className="nav">
+                    <img src={profileImage} alt="Profile" className="profile-img" />
+                    {menuData.map((data, idx) => (
+                        <button
+                            key={idx}
+                            className="nav-link"
+                            onClick={() => handleNavClick(data)}
+                        >
+                            {data}
+                        </button>
+                    ))}
+                    <div className="info-box">
+                        <p className="contact-title">Contact Me</p>
+                        <div className="info-text">
+                            <p>송동하 (Dongha Song)</p>
+                            <p>010-5745-7173</p>
+                            <p>gch04912@gmail.com</p>
+                            <p className="github-title">
+                                <a href="https://github.com/Modem924" target="_blank" rel="noopener noreferrer">
+                                    Github
+                                </a>
+                            </p>
+                        </div>
                     </div>
-                </div>
-            </nav>
+                </nav>
+            </div>
+            <MainPage />
             <style jsx>{`
                 @import url('https://fonts.googleapis.com/css2?family=Jersey+10&display=swap');
 
-                @font-face {
-                    font-family: "Jersey 10";
-                    font-weight: 400;
-                    font-style: normal;
+                .layout {
+                    display: flex;
+                    height: 100vh;
                 }
 
                 .container {
@@ -71,13 +79,14 @@ const Navigationbar = () => {
                     top: 0;
                     left: 0;
                     height: 100%;
-                    width: 400px;
+                    width: 25%;
                     background-color: #f4f4f4;
                     padding-top: 20px;
                     display: flex;
                     flex-direction: column;
                     align-items: center;
                     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+                    z-index: 1000;
                 }
 
                 .nav {
@@ -96,7 +105,7 @@ const Navigationbar = () => {
 
                 .info-box {
                     width: 80%;
-                    margin-top:20px;
+                    margin-top: 20px;
                     padding: 20px;
                     border: 2px solid #0F1447;
                     border-radius: 15px;
