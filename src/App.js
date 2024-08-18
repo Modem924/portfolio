@@ -4,11 +4,11 @@ import { MainPage } from "./components";
 
 const App = () => {
   return (
-    <Router>
+    <BrowserRouter basename={process.env.PUBLIC_URL}>
       <Routes>
-        <Route path="/" element={<MainPage />} />
+          <Route path="/" element={<Mainpage />} />
       </Routes>
-    </Router>
+    </BrowserRouter>
   );
 };
 
